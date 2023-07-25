@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Calculator Apk</string>
+    <string name="Add">Add</string>
+    <string name="Sub">Sub</string>
+    <string name="Mul">Mul</string>
+    <string name="Div">Div</string>
+    <string name="Reset">Reset</string>
+    <string name="Btn">Button</string>
+    <string name="FirNo">First Number</string>
+    <string name="SecNo">Second Number</string>
+    <string name="AddText">Addition of %d and %d is %d </string>
+    <string name="SubText">Subtraction of %d and %d is %d </string>
+    <string name="MulText">Multiplication of %d and %d is %d </string>
+    <string name="DivText">Division of %d and %d is %d </string>
+    <string name="ans">Result of %d and %d is %d </string>
+    <string name="DivideByZeroError">"You Can't Able to Divide by 0"</string>
+</resources>
