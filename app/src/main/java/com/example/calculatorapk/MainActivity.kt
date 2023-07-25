@@ -5,13 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager
 
 
-class MainActivity : AppCompatActivity(), FragmentActionListener,FragmentManager.OnBackStackChangedListener{
+class MainActivity : AppCompatActivity(), FragmentActionListener,
+    FragmentManager.OnBackStackChangedListener {
 
-    private  var currentConfiguration = 0
-    private  var onBtnSelected1: String = ""
+    private var currentConfiguration = 0
+    private var onBtnSelected1: String = ""
     private lateinit var fragmentManager: FragmentManager
     private lateinit var firstFragment: FirstFragment
     private val bundleKey = "BundleKey"
@@ -24,47 +26,55 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,FragmentManager
         setContentView(R.layout.activity_main)
 
 
-        if(savedInstanceState == null) showDefaultFragment()
+        if (savedInstanceState == null) showDefaultFragment()
 
         val check = savedInstanceState?.getString(bundleKey)
-        if(!check.isNullOrEmpty()){
+        if (!check.isNullOrEmpty()) {
 
             onBtnSelected1 = check
-            if(currentConfiguration == Configuration.ORIENTATION_PORTRAIT){
+            if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT) {
                 addSecondFragment(onBtnSelected1)
                 val frgOne = supportFragmentManager.findFragmentById(R.id.fragmentContainer2)
                 if (frgOne != null) {
                     supportFragmentManager.beginTransaction().remove(frgOne).commit()
                 }
 
-            }else {
-                addSecondFragment(R.id.fragmentContainer2,onBtnSelected1)
+            } else {
+                addSecondFragment(R.id.fragmentContainer2, onBtnSelected1)
             }
         }
+//        onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPress()
+            }
+
+        })
 
     }
 
-    private fun showDefaultFragment(){
+    private fun showDefaultFragment() {
         firstFragment = FirstFragment()
         fragmentManager.beginTransaction().apply {
-            replace(R.id.fragmentContainer,firstFragment,"firstFragment").commit()
+            replace(R.id.fragmentContainer, firstFragment, "firstFragment").commit()
         }
     }
 
-    override fun passData(onBtnSelected : String) {
-        if(currentConfiguration == Configuration.ORIENTATION_PORTRAIT)
-            addSecondFragment(onBtnSelected)
-        else if(currentConfiguration == Configuration.ORIENTATION_LANDSCAPE) {
+    override fun passData(onBtnSelected: String) {
+        if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT) addSecondFragment(
+            onBtnSelected
+        )
+        else if (currentConfiguration == Configuration.ORIENTATION_LANDSCAPE) {
             addSecondFragment(R.id.fragmentContainer2, onBtnSelected)
         }
 
     }
 
-    private fun addSecondFragment(onBtnSelected : String) {
+    private fun addSecondFragment(onBtnSelected: String) {
         onBtnSelected1 = onBtnSelected
 
         val bundle = Bundle()
-        bundle.putString(Constants.btnText,onBtnSelected)
+        bundle.putString(Constants.btnText, onBtnSelected)
 
         val secondFragment = SecondFragment()
         secondFragment.arguments = bundle
@@ -76,14 +86,16 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,FragmentManager
         }
     }
 
-    private  fun addSecondFragment(containerId :Int, onBtnSelected: String) {
+    private fun addSecondFragment(containerId: Int, onBtnSelected: String) {
         onBtnSelected1 = onBtnSelected
 
         val bundle = Bundle()
-        bundle.putString(Constants.btnText,onBtnSelected)
+        bundle.putString(Constants.btnText, onBtnSelected)
 
-        if(fragmentManager.backStackEntryCount>=0) {
-            supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        if (fragmentManager.backStackEntryCount >= 0) {
+            supportFragmentManager.popBackStackImmediate(
+                null, FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
         }
 
         val secondFragment = SecondFragment()
@@ -96,46 +108,43 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,FragmentManager
         }
     }
 
-    override fun passCallBackData(ansText : String) {
+    override fun passCallBackData(ansText: String) {
         val fragment = fragmentManager.findFragmentByTag("firstFragment") as FirstFragment
 
         onBtnSelected1 = ""
 
         val bundle = Bundle()
-        bundle.putString(Constants.ansTxt,ansText)
+        bundle.putString(Constants.ansTxt, ansText)
         fragment.arguments = bundle
 
-        if(Configuration.ORIENTATION_LANDSCAPE == currentConfiguration)
-            fragment.showResultView()
+        if (Configuration.ORIENTATION_LANDSCAPE == currentConfiguration) fragment.showResultView()
 
     }
 
 
-    override fun onBackPressed() {
-
+    fun onBackPress() {
         if (fragmentManager.backStackEntryCount > 0) {
             fragmentManager.popBackStack()
         } else {
-            super.onBackPressed()
+            finish()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        if( onBtnSelected1.isNotEmpty()) {
-           Toast.makeText(this, " onSaved $onBtnSelected1", Toast.LENGTH_SHORT).show()
-           outState.putString(bundleKey, onBtnSelected1)
-       }
+        if (onBtnSelected1.isNotEmpty()) {
+            Toast.makeText(this, " onSaved $onBtnSelected1", Toast.LENGTH_SHORT).show()
+            outState.putString(bundleKey, onBtnSelected1)
+        }
 
     }
 
 
-
     override fun onBackStackChanged() {
-        for(i in 0.. supportFragmentManager.backStackEntryCount){
-                Log.d("BackStack entry" ,"${supportFragmentManager.getBackStackEntryAt(i).name}")
-            }
+        for (i in 0..supportFragmentManager.backStackEntryCount) {
+            Log.d("BackStack entry", "${supportFragmentManager.getBackStackEntryAt(i).name}")
+        }
     }
 
 
