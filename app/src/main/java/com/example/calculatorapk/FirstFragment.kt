@@ -1,6 +1,5 @@
 package com.example.calculatorapk
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -92,7 +91,7 @@ class FirstFragment : Fragment(),View.OnClickListener {
             R.id.btnDiv -> { btnText = Constants.div }
         }
 
-        fragmentActionListener.passData(btnText)
+        fragmentActionListener.passBtnSelectedText(btnText)
 
     }
 

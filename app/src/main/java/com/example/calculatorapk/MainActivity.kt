@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
         }
     }
 
-    override fun passData(onBtnSelected: String) {
+    override fun passBtnSelectedText(onBtnSelected: String) {
         if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT) addSecondFragment(
             onBtnSelected
         )
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
         }
     }
 
-    override fun passCallBackData(ansText: String) {
+    override fun passBackAnsText(ansText: String) {
         val fragment = fragmentManager.findFragmentByTag("firstFragment") as FirstFragment
 
         onBtnSelected1 = ""

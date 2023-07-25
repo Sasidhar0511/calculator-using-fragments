@@ -1,6 +1,5 @@
 package com.example.calculatorapk
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -56,7 +55,7 @@ class SecondFragment : Fragment() {
 
             if (ans != null ) {
                 parentFragmentManager.popBackStack()
-                fragmentActionListener.passCallBackData(ansText)
+                fragmentActionListener.passBackAnsText(ansText)
             }
 
         }

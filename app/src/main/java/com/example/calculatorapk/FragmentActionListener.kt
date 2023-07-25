@@ -3,7 +3,7 @@ package com.example.calculatorapk
 
 interface FragmentActionListener {
 
-        fun passData(onBtnSelected : String)
-        fun passCallBackData(ansText : String)
+        fun passBtnSelectedText(onBtnSelected : String)
+        fun passBackAnsText(ansText : String)
 
 }
