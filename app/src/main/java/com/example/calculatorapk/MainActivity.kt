@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
 
             onBtnSelected1 = check
             if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT) {
-                addSecondFragment(onBtnSelected1)
+                addSecondFragment(R.id.fragmentContainer,onBtnSelected1)
                 val frgOne = supportFragmentManager.findFragmentById(R.id.fragmentContainer2)
                 if (frgOne != null) {
                     supportFragmentManager.beginTransaction().remove(frgOne).commit()
@@ -43,13 +43,13 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
                 addSecondFragment(R.id.fragmentContainer2, onBtnSelected1)
             }
         }
-//        onBackPressedDispatcher.onBackPressed()
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        onBackPressedDispatcher.onBackPressed()
+        /*onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 onBackPress()
-            }
+            }*/
 
-        })
+//        })
 
     }
 
@@ -61,16 +61,15 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
     }
 
     override fun passBtnSelectedText(onBtnSelected: String) {
-        if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT) addSecondFragment(
-            onBtnSelected
-        )
+        if (currentConfiguration == Configuration.ORIENTATION_PORTRAIT)
+            addSecondFragment(R.id.fragmentContainer,onBtnSelected)
         else if (currentConfiguration == Configuration.ORIENTATION_LANDSCAPE) {
             addSecondFragment(R.id.fragmentContainer2, onBtnSelected)
         }
 
     }
 
-    private fun addSecondFragment(onBtnSelected: String) {
+    /*private fun addSecondFragment(onBtnSelected: String) {
         onBtnSelected1 = onBtnSelected
 
         val bundle = Bundle()
@@ -84,7 +83,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
             addToBackStack(null)
             commit()
         }
-    }
+    }*/
 
     private fun addSecondFragment(containerId: Int, onBtnSelected: String) {
         onBtnSelected1 = onBtnSelected
@@ -122,13 +121,13 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
     }
 
 
-    fun onBackPress() {
+   /* fun onBackPress() {
         if (fragmentManager.backStackEntryCount > 0) {
             fragmentManager.popBackStack()
         } else {
             finish()
         }
-    }
+    }*/
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
