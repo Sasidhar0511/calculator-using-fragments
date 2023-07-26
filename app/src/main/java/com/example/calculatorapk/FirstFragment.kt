@@ -45,7 +45,7 @@ class FirstFragment : Fragment(),View.OnClickListener {
         btnDiv.setOnClickListener (this)
 
         if(arguments!=null){
-            Toast.makeText(context,"hi from args", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context,"hi from args", Toast.LENGTH_SHORT).show()
             showResultView()
         }
 
