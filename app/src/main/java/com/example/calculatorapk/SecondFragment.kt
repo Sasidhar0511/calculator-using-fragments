@@ -25,16 +25,16 @@ class SecondFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_second, container, false)
 
-        var ans: Int? = null
+        var answer: Int? = null
         var ansText = ""
         val firstNum = view.findViewById<EditText>(R.id.etFirstNo)
         val secondNum = view.findViewById<EditText>(R.id.etSecondNo)
-        val btn = view.findViewById<Button>(R.id.button)
+        val operationBtn = view.findViewById<Button>(R.id.button)
 
         val btnText = arguments?.getString(Constants.btnText)
-        btn.text = btnText
+        operationBtn.text = btnText
 
-        btn.setOnClickListener {
+        operationBtn.setOnClickListener {
 
             try {
                 val firstNo = firstNum.text.toString().toInt()
@@ -42,26 +42,26 @@ class SecondFragment : Fragment() {
 
                 when (btnText) {
                     Constants.add -> {
-                        ans = firstNo + secNo; ansText =
-                            getString(R.string.AddText, firstNo, secNo, ans)
+                        answer = firstNo + secNo; ansText =
+                            getString(R.string.AddText, firstNo, secNo, answer)
                     }
 
                     Constants.sub -> {
-                        ans = firstNo - secNo; ansText =
-                            getString(R.string.SubText, firstNo, secNo, ans)
+                        answer = firstNo - secNo; ansText =
+                            getString(R.string.SubText, firstNo, secNo, answer)
                     }
 
                     Constants.mul -> {
-                        ans = firstNo * secNo; ansText =
-                            getString(R.string.MulText, firstNo, secNo, ans)
+                        answer = firstNo * secNo; ansText =
+                            getString(R.string.MulText, firstNo, secNo, answer)
                     }
 
                     Constants.div -> {
                         if (secNo == 0) {
                             Toast.makeText(context, R.string.DivideByZeroError, Toast.LENGTH_SHORT).show()
                         } else {
-                            ans = firstNo / secNo
-                            ansText = getString(R.string.DivText, firstNo, secNo, ans)
+                            answer = firstNo / secNo
+                            ansText = getString(R.string.DivText, firstNo, secNo, answer)
                         }
                     }
                 }
@@ -69,7 +69,7 @@ class SecondFragment : Fragment() {
 
                 Toast.makeText(
                     requireActivity().baseContext,
-                    "Ensure To Fill All Numbers",
+                    R.string.NumberFormatErrorString,
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
@@ -77,7 +77,7 @@ class SecondFragment : Fragment() {
 
 
 
-            if (ans != null) {
+            if (answer != null) {
                 parentFragmentManager.popBackStack()
                 fragmentActionListener.passBackAnsText(ansText)
             }

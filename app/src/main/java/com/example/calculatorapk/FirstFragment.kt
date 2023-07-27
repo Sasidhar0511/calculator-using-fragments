@@ -7,17 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 
 
 class FirstFragment : Fragment(),View.OnClickListener {
 
-    private lateinit var btnAdd : Button
-    private lateinit var btnSub : Button
-    private lateinit var btnMul : Button
-    private lateinit var btnDiv : Button
-    private lateinit var btnReset : Button
-    private lateinit var tvRes : TextView
+    private lateinit var addButton : Button
+    private lateinit var subButton : Button
+    private lateinit var mulButton : Button
+    private lateinit var divButton : Button
+    private lateinit var resetButton : Button
+    private lateinit var tvResult : TextView
 
     private lateinit var fragmentActionListener: FragmentActionListener
 
@@ -32,35 +31,33 @@ class FirstFragment : Fragment(),View.OnClickListener {
 
         val view =  inflater.inflate(R.layout.fragment_first, container, false)
 
-        btnAdd = view.findViewById(R.id.btnAdd)
-        btnSub = view.findViewById(R.id.btnSub)
-        btnMul = view.findViewById(R.id.btnMul)
-        btnDiv = view.findViewById(R.id.btnDiv)
-        btnReset = view.findViewById(R.id.btnReset)
-        tvRes = view.findViewById(R.id.tvResult)
+        addButton = view.findViewById(R.id.btnAdd)
+        subButton = view.findViewById(R.id.btnSub)
+        mulButton = view.findViewById(R.id.btnMul)
+        divButton = view.findViewById(R.id.btnDiv)
+        resetButton = view.findViewById(R.id.btnReset)
+        tvResult = view.findViewById(R.id.tvResult)
 
-        btnAdd.setOnClickListener (this)
-        btnSub.setOnClickListener (this)
-        btnMul.setOnClickListener (this)
-        btnDiv.setOnClickListener (this)
+        addButton.setOnClickListener (this)
+        subButton.setOnClickListener (this)
+        mulButton.setOnClickListener (this)
+        divButton.setOnClickListener (this)
 
         if(arguments!=null){
-            //Toast.makeText(context,"hi from args", Toast.LENGTH_SHORT).show()
             showResultView()
         }
 
-        btnReset.setOnClickListener {
+        resetButton.setOnClickListener {
 
-            btnAdd.visibility = View.VISIBLE
-            btnSub.visibility = View.VISIBLE
-            btnMul.visibility = View.VISIBLE
-            btnDiv.visibility = View.VISIBLE
+            addButton.visibility = View.VISIBLE
+            subButton.visibility = View.VISIBLE
+            mulButton.visibility = View.VISIBLE
+            divButton.visibility = View.VISIBLE
 
-            btnReset.visibility = View.GONE
-            tvRes.visibility = View.GONE
+            resetButton.visibility = View.GONE
+            tvResult.visibility = View.GONE
 
-            //if(tvRes.text.toString().isNotEmpty())
-            tvRes.text = null
+            tvResult.text = null
             arguments = null
         }
 
@@ -68,17 +65,16 @@ class FirstFragment : Fragment(),View.OnClickListener {
     }
 
     fun showResultView() {
-       // Toast.makeText(context,"resultView",Toast.LENGTH_SHORT).show()
 
-        btnAdd.visibility = View.GONE
-        btnSub.visibility = View.GONE
-        btnMul.visibility = View.GONE
-        btnDiv.visibility = View.GONE
-        btnReset.visibility = View.VISIBLE
-        tvRes.visibility = View.VISIBLE
+        addButton.visibility = View.GONE
+        subButton.visibility = View.GONE
+        mulButton.visibility = View.GONE
+        divButton.visibility = View.GONE
+        resetButton.visibility = View.VISIBLE
+        tvResult.visibility = View.VISIBLE
 
         val result = arguments?.getString(Constants.ansTxt)
-        tvRes.text = result
+        tvResult.text = result
     }
 
     override fun onClick(view: View?) {

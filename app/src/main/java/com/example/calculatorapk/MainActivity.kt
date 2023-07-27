@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentManager
 
@@ -45,6 +44,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
                 addSecondFragment(R.id.fragmentContainer2, btnSelectedString1)
             }
         }
+
         //  onBackPressedDispatcher.onBackPressed()
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -70,21 +70,6 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
 
     }
 
-    /*private fun addSecondFragment(onBtnSelected: String) {
-        onBtnSelected1 = onBtnSelected
-
-        val bundle = Bundle()
-        bundle.putString(Constants.btnText, onBtnSelected)
-
-        val secondFragment = SecondFragment()
-        secondFragment.arguments = bundle
-
-        fragmentManager.beginTransaction().apply {
-            replace(R.id.fragmentContainer, secondFragment, "secondFragment")
-            addToBackStack(null)
-            commit()
-        }
-    }*/
 
     private fun addSecondFragment(containerId: Int, onBtnSelected: String) {
         btnSelectedString1 = onBtnSelected
@@ -134,7 +119,6 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
         super.onSaveInstanceState(outState)
 
         if (btnSelectedString1.isNotEmpty()) {
-            //Toast.makeText(this, " onSaved $btnSelectedString1", Toast.LENGTH_SHORT).show()
             outState.putString(bundleKey, btnSelectedString1)
         }
 
