@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-
+import java.lang.NumberFormatException
 
 
 class SecondFragment : Fragment() {
@@ -23,10 +23,10 @@ class SecondFragment : Fragment() {
 
         fragmentActionListener = activity as FragmentActionListener
 
-        val view =  inflater.inflate(R.layout.fragment_second, container, false)
+        val view = inflater.inflate(R.layout.fragment_second, container, false)
 
-        var ans : Int? = null
-        var ansText  = ""
+        var ans: Int? = null
+        var ansText = ""
         val firstNum = view.findViewById<EditText>(R.id.etFirstNo)
         val secondNum = view.findViewById<EditText>(R.id.etSecondNo)
         val btn = view.findViewById<Button>(R.id.button)
@@ -36,24 +36,48 @@ class SecondFragment : Fragment() {
 
         btn.setOnClickListener {
 
-            val firstNo = firstNum.text.toString().toInt()
-            val secNo = secondNum.text.toString().toInt()
+            try {
+                val firstNo = firstNum.text.toString().toInt()
+                val secNo = secondNum.text.toString().toInt()
 
-            when (btnText) {
-                Constants.add -> { ans = firstNo + secNo; ansText = getString(R.string.AddText, firstNo, secNo, ans) }
-                Constants.sub -> { ans = firstNo - secNo; ansText = getString(R.string.SubText, firstNo, secNo, ans) }
-                Constants.mul -> { ans = firstNo * secNo; ansText = getString(R.string.MulText, firstNo, secNo, ans) }
-                Constants.div -> {
-                    if (secNo == 0) {
-                        Toast.makeText(context, R.string.DivideByZeroError, Toast.LENGTH_SHORT).show()
-                    } else {
-                        ans = firstNo / secNo
-                        ansText = getString(R.string.DivText, firstNo, secNo, ans)
+                when (btnText) {
+                    Constants.add -> {
+                        ans = firstNo + secNo; ansText =
+                            getString(R.string.AddText, firstNo, secNo, ans)
+                    }
+
+                    Constants.sub -> {
+                        ans = firstNo - secNo; ansText =
+                            getString(R.string.SubText, firstNo, secNo, ans)
+                    }
+
+                    Constants.mul -> {
+                        ans = firstNo * secNo; ansText =
+                            getString(R.string.MulText, firstNo, secNo, ans)
+                    }
+
+                    Constants.div -> {
+                        if (secNo == 0) {
+                            Toast.makeText(context, R.string.DivideByZeroError, Toast.LENGTH_SHORT).show()
+                        } else {
+                            ans = firstNo / secNo
+                            ansText = getString(R.string.DivText, firstNo, secNo, ans)
+                        }
                     }
                 }
+            } catch (exception: NumberFormatException) {
+
+                Toast.makeText(
+                    requireActivity().baseContext,
+                    "Ensure To Fill All Numbers",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
             }
 
-            if (ans != null ) {
+
+
+            if (ans != null) {
                 parentFragmentManager.popBackStack()
                 fragmentActionListener.passBackAnsText(ansText)
             }

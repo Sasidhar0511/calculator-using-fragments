@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener,
         super.onSaveInstanceState(outState)
 
         if (btnSelectedString1.isNotEmpty()) {
-            Toast.makeText(this, " onSaved $btnSelectedString1", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, " onSaved $btnSelectedString1", Toast.LENGTH_SHORT).show()
             outState.putString(bundleKey, btnSelectedString1)
         }
 
